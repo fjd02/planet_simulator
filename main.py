@@ -1,10 +1,10 @@
-import pygame, math
+import pygame
 from planet import Planet
 
 pygame.init()
 
 # STATIC VARIABLES
-WIDTH, HEIGHT = 900, 900
+WIDTH, HEIGHT = 1500, 800
 WIN = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("Planet Simulation")
 
@@ -12,7 +12,7 @@ pygame.display.set_caption("Planet Simulation")
 WHITE = (255, 255, 255)
 YELLOW = (255, 255, 0)
 LIGHT_YELLOW = (170, 170, 0)
-DARK_BLUE = (100, 149, 255)
+DARK_BLUE = (100, 200, 255)
 BLUE = (100, 149, 237)
 LIGHT_BLUE = (100, 149, 175)
 RED = (188, 39, 50)
@@ -26,28 +26,45 @@ def main():
     clock = pygame.time.Clock()
 
     # Sun and Planets
-    sun = Planet(0, 0, 35, YELLOW, 1.98892 * 10**30)
+    sun = Planet(0, 0, 6, YELLOW, 1.98892 * 10**30)
     sun.sun = True
-    mercury = Planet(0.3 * Planet.AU, 0, 4, DARK_GREY, 3.30 * 10**23)
-    venus = Planet(0.7 * Planet.AU, 0, 7, WHITE, 4.8685 * 10**24)
-    earth = Planet(-0.9 * Planet.AU, 0, 8, BLUE, 5.9742 * 10**24)
-    mars = Planet(-1.3 * Planet.AU, 0, 5, RED, 6.39 * 10**23)
-    jupiter = Planet(0, -1.6 * Planet.AU, 25, PURPLE, 1.90 * 10*27)
-    saturn = Planet(0, 1.7 * Planet.AU, 22, LIGHT_YELLOW, 5.68 * 10**26)
-    uranus = Planet(-2 * Planet.AU, 0, 14, LIGHT_BLUE, 8.68 * 10**25)
-    neptune = Planet(2.1 * Planet.AU, 0, 13, DARK_BLUE, 1.02* 10**26)
+
+    mercury = Planet(0.387 * Planet.AU, 0, 2, DARK_GREY, 3.30 * 10**23)
+    mercury.y_vel = -47.870 * 1000
+
+    venus = Planet(0.723 * Planet.AU, 0, 4, WHITE, 4.8685 * 10**24)
+    venus.y_vel = -35.020 * 1000
+
+    earth = Planet(-1 * Planet.AU, 0, 5, BLUE, 5.9742 * 10**24)
+    earth.y_vel = 29.780 * 1000
+
+    mars = Planet(-1.524 * Planet.AU, 0, 3, RED, 6.39 * 10**23)
+    mars.y_vel = 24.070 * 1000
+
+    jupiter = Planet(5.203 * Planet.AU, 0, 14, PURPLE, 1.8981 * 10**27)
+    jupiter.y_vel = -13.070 * 1000
+
+    saturn = Planet(9.537 * Planet.AU, 0, 12, LIGHT_YELLOW, 5.68 * 10**26)
+    saturn.y_vel = -9.690 * 1000
+
+    uranus = Planet(-19.191 * Planet.AU, 0, 8, LIGHT_BLUE, 8.68 * 10**25)
+    uranus.y_vel = 6.810 * 1000
+
+    neptune = Planet(30.071 * Planet.AU, 0, 7, DARK_BLUE, 1.02 * 10**26)
+    neptune.y_vel = -5.430 * 1000
 
     planets = [sun, earth, mars, mercury, venus, jupiter, saturn, uranus, neptune]
 
     while run:
         clock.tick(60)
-        #WIN.fill(WHITE)
+        WIN.fill((0, 0, 0))
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 run = False
         
         for planet in planets:
+            planet.update_position(planets)
             planet.draw(WIN, WIDTH, HEIGHT)
 
         pygame.display.update()
